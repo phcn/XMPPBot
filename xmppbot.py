@@ -1,11 +1,12 @@
 '''
-Last Commit: 09.01.2014
+Last Commit: 10.01.2014
 
 @author: board.phcn.net
 '''
 
 import sleekxmpp
 from features.feedfeature import FeedFeature
+from features.beerfeature import BeerFeature
 
 class MUCBot(sleekxmpp.ClientXMPP):
     def __init__(self, jid, password, room, nick):
@@ -33,6 +34,8 @@ class MUCBot(sleekxmpp.ClientXMPP):
             
             if feature_command in features:
                 if feature_command in msg['body']:
+					feature_parameters.append(self.nick)
+                    feature_parameters.append(msg['mucnick'])
                     feature_response = features[feature_command].process(feature_parameters)
             else:
                 feature_response = 'Unknown Feature "' + feature_command + '"\n'
@@ -47,7 +50,8 @@ if __name__ == '__main__':
     room = "chatroom@conference.phcn.de"
     nick = "roomnick"
     
-    features = {'feed' : FeedFeature() }
+    features = {'feed' : FeedFeature(),
+			    'beer' : BeerFeature() }
     
     help_messages = 'XMPP-ChatBot Features: \n'
     
