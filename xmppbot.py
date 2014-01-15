@@ -1,14 +1,33 @@
 '''
-Last Commit: 10.01.2014
+Last Commit: 15.01.2014
 
 @author: board.phcn.net
 '''
 
+import os
+import imp 
 import sleekxmpp
-from features.feedfeature import FeedFeature
-from features.beerfeature import BeerFeature
+import ConfigParser
 
-class MUCBot(sleekxmpp.ClientXMPP):
+
+def feature_import(feature_sections):
+    features = {}
+    help_messages = 'XMPP-ChatBot Features: \n'
+    
+    for feature in feature_sections:        
+        try:
+            uri = os.path.normpath(os.path.join(os.path.dirname(__file__), config.get('Features', feature)))
+            feature_module = imp.load_source(feature, uri)
+            feature_instance = feature_module.BotFeature()
+            features[feature_instance.keyword()] = feature_instance
+            help_messages += feature_instance.help(); 
+        except:
+            pass
+    
+    return features, help_messages
+
+
+class XMPPBot(sleekxmpp.ClientXMPP):
     def __init__(self, jid, password, room, nick):
         sleekxmpp.ClientXMPP.__init__(self, jid, password)
 
@@ -27,38 +46,38 @@ class MUCBot(sleekxmpp.ClientXMPP):
                                         wait=True)
 
     def muc_message(self, msg):        
-        if msg['mucnick'] != self.nick and self.nick in msg['body']:
+        if msg['mucnick'] != self.nick and \
+           self.nick in msg['body'].split(' ')[0][:-1] or\
+           self.nick in msg['body'].split(' ')[0]:
+
             feature_parameters = msg['body'].split()
             feature_parameters.pop(0)
             feature_command = feature_parameters.pop(0)
             
             if feature_command in features:
                 if feature_command in msg['body']:
-					feature_parameters.append(self.nick)
+                    feature_parameters.append(self.nick)
                     feature_parameters.append(msg['mucnick'])
                     feature_response = features[feature_command].process(feature_parameters)
-            else:
+            elif feature_command == 'help':
                 feature_response = 'Unknown Feature "' + feature_command + '"\n'
                 feature_response += help_messages
         
             self.send_message(mto=msg['from'].bare, mbody=feature_response, mtype='groupchat')
 
 
-if __name__ == '__main__':
-    jid = "bot@phcn.de"
-    password = "botpassword"
-    room = "chatroom@conference.phcn.de"
-    nick = "roomnick"
-    
-    features = {'feed' : FeedFeature(),
-			    'beer' : BeerFeature() }
-    
-    help_messages = 'XMPP-ChatBot Features: \n'
-    
-    for feature in features:
-        help_messages += features[feature].help(); 
+if __name__ == '__main__':     
+    config = ConfigParser.ConfigParser()
+    config.read('bot.cfg')
 
-    xmpp = MUCBot(jid, password, room, nick)
+    features, help_messages = feature_import(config.options('Features'))
+
+    jabber_id = config.get('XMPP', 'jabberid')
+    password = config.get('XMPP', 'password')
+    room = config.get('XMPP', 'room')
+    nick_name = config.get('XMPP', 'nickname')
+    
+    xmpp = XMPPBot(jabber_id, password, room, nick_name)
     xmpp.register_plugin('xep_0030') # Service Discovery
     xmpp.register_plugin('xep_0045') # Multi-User Chat
     xmpp.register_plugin('xep_0199') # XMPP Ping
