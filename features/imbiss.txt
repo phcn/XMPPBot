@@ -1,0 +1,4 @@
+popcorn,füllt eine Tüte voll mit Popcorn und überreicht sie
+döner,fertigt einen Döner mit Swibeln und extra Schaf an und gibt ihn
+dönerone,fertigt einen Döner one Swibeln und one Schaf an und gibt ihn
+pbj,fertigt ein Peanut Butter Jelly Sandwich an und überreicht es an
