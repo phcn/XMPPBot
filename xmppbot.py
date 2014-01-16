@@ -1,5 +1,5 @@
 '''
-Last Commit: 15.01.2014
+Last Commit: 16.01.2014
 
 @author: board.phcn.net
 '''
@@ -13,11 +13,12 @@ import ConfigParser
 def feature_import(feature_sections):
     features = {}
     help_messages = 'XMPP-ChatBot Features: \n'
-    
+     
     for feature in feature_sections:        
         try:
-            uri = os.path.normpath(os.path.join(os.path.dirname(__file__), config.get('Features', feature)))
-            feature_module = imp.load_source(feature, uri)
+            uri = os.path.normpath(os.path.join(os.path.dirname(__file__), feature.strip()))
+            module_name = os.path.splitext(os.path.split(uri)[1])[0]     
+            feature_module = imp.load_source(module_name, uri)
             feature_instance = feature_module.BotFeature()
             features[feature_instance.keyword()] = feature_instance
             help_messages += feature_instance.help(); 
@@ -69,7 +70,7 @@ if __name__ == '__main__':
     config = ConfigParser.ConfigParser()
     config.read('bot.cfg')
 
-    features, help_messages = feature_import(config.options('Features'))
+    features, help_messages = feature_import(config.get('Features','featurepaths').split(';'))
 
     jabber_id = config.get('XMPP', 'jabberid')
     password = config.get('XMPP', 'password')
