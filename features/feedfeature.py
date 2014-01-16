@@ -32,7 +32,7 @@ class BotFeature(Feature):
             return self.help()
         
     def help(self):
-        return 'feed <newssite> - Use "info" to receive supported Feeds\n'
+        return 'feed <newssite> - use "info" to receive supported Feeds\n'
 
         
     def keyword(self):

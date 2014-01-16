@@ -1,5 +1,5 @@
 '''
-Last Commit: 15.01.2014
+Last Commit: 16.01.2014
 
 @author: freak_out@phcn.de
 '''
@@ -34,7 +34,7 @@ class BotFeature(Feature):
             return self.help()
         
     def help(self):
-        return 'roulette\n'
+        return 'roulette - play russian roulette! :)\n'
     
     def keyword(self):
         return 'roulette'
