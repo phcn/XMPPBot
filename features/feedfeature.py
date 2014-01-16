@@ -24,8 +24,8 @@ class BotFeature(Feature):
             news_feed = feedparser.parse(news_feeds[parameters[0]])
             news_titles = 'News: \n'
              
-            for item in news_feed['items']:
-                news_titles += item['title'] + '\n';
+            for item in news_feed.entries[:5]:
+                news_titles += item['title'] + ": " + item['link'] + '\n';
             
             return news_titles         
         else:
