@@ -1,5 +1,5 @@
 '''
-Last Commit: 15.01.2014
+Last Commit: 16.01.2014
 
 @author: freak_out@phcn.de
 '''
@@ -26,7 +26,7 @@ class BotFeature(Feature):
             return food[:-1]
 
         if len(parameters) == 3:
-            imbissitem = parameters[0].lower()
+            imbissitem = parameters[0].lower().encode('utf-8')
             if imbissitem in imbiss:
                 return  '*** ' + parameters[1] + ' ' + imbiss[imbissitem][:-1] + ' ' + parameters[2]
             else:
