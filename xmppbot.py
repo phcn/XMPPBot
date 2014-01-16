@@ -60,8 +60,7 @@ class XMPPBot(sleekxmpp.ClientXMPP):
                     feature_parameters.append(msg['mucnick'])
                     feature_response = features[feature_command].process(feature_parameters)
             elif feature_command == 'help':
-                feature_response = 'Unknown Feature "' + feature_command + '"\n'
-                feature_response += help_messages
+                feature_response = help_messages
         
             self.send_message(mto=msg['from'].bare, mbody=feature_response, mtype='groupchat')
 
