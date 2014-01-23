@@ -1,5 +1,5 @@
 '''
-Last Commit: 16.01.2014
+Last Commit: 23.01.2014
 
 @author: board.phcn.net
 '''
@@ -8,6 +8,7 @@ import os
 import imp 
 import sleekxmpp
 import ConfigParser
+import megahal
 
 
 def feature_import(feature_sections):
@@ -47,9 +48,12 @@ class XMPPBot(sleekxmpp.ClientXMPP):
                                         wait=True)
 
     def muc_message(self, msg):        
+        mega_hal.learn(msg['body'])
+        mega_hal.sync()
+        
         if msg['mucnick'] != self.nick and \
-           self.nick in msg['body'].split(' ')[0][:-1] or\
-           self.nick in msg['body'].split(' ')[0]:
+           (self.nick in msg['body'].split(' ')[0][:-1] or\
+           self.nick in msg['body'].split(' ')[0]):
 
             feature_parameters = msg['body'].split()
             feature_parameters.pop(0)
@@ -62,7 +66,9 @@ class XMPPBot(sleekxmpp.ClientXMPP):
                     feature_response = features[feature_command].process(feature_parameters)
             elif feature_command == 'help':
                 feature_response = help_messages
-        
+            else:
+                feature_response = mega_hal.get_reply(msg['body']).replace(self.nick,msg['mucnick'])
+
             self.send_message(mto=msg['from'].bare, mbody=feature_response, mtype='groupchat')
 
 
@@ -81,10 +87,13 @@ if __name__ == '__main__':
     xmpp.register_plugin('xep_0030') # Service Discovery
     xmpp.register_plugin('xep_0045') # Multi-User Chat
     xmpp.register_plugin('xep_0199') # XMPP Ping
-
+    
+    mega_hal = megahal.MegaHAL()
 
     if xmpp.connect():
         xmpp.process(block=True)
         print("Done")
     else:
         print("Unable to connect.")
+        
+    mega_hal.close()
