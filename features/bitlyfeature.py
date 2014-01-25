@@ -17,7 +17,7 @@ class BotFeature(Feature):
         feature_response = ''
         
         if self.__url_validator(parameters[0]):
-            query_params = {'access_token' : 'c50cb2e5f6ef3690269cd10e2cab8db0ae7b056c',
+            query_params = {'access_token' : 'access-token-here',
                             'longUrl': parameters[0]} 
 
             endpoint = 'https://api-ssl.bitly.com/v3/shorten'
