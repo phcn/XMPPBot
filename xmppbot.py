@@ -6,11 +6,18 @@ Last Commit: 24.01.2014
 
 import os
 import imp 
+import sys
 import sleekxmpp
 import ConfigParser
 import megahal
 
-
+def log_debug(message):
+    print "DEBUG: " + message
+    pass
+def log_error(message):
+    print "ERROR: " + message
+    pass
+    
 def feature_import(feature_sections):
     features = {}
     help_messages = 'XMPP-ChatBot Features: \n'
@@ -24,7 +31,9 @@ def feature_import(feature_sections):
             features[feature_instance.keyword()] = feature_instance
             help_messages += feature_instance.help(); 
         except:
-            pass
+            e = sys.exc_info()[0]
+            log_error("could not load module " + module_name)
+            log_debug(str(e))
     
     return features, help_messages
 
