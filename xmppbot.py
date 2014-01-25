@@ -94,10 +94,11 @@ if __name__ == '__main__':
 
     if xmpp.connect():
         xmpp.process(block=True)
-        print("Done")
+        print('Done')
     else:
-        print("Unable to connect.")
+        print('Unable to connect.')
         
     print('bye!')
+    
     mega_hal.sync()
     mega_hal.close()
