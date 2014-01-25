@@ -1,5 +1,4 @@
 XMPPBot
 =======
 
-A Python XMPP-Chatbot based on the SleekXMPP Library (http://sleekxmpp.com/)
-XMPPBot uses the MegaHAL AI Engine (http://code.google.com/p/halpy/)
+A Python XMPP-Chatbot based on the SleekXMPP (http://sleekxmpp.com/) and MegaHAL (http://code.google.com/p/halpy/)
