@@ -1,12 +1,12 @@
 '''
-Last Commit: 25.01.2014
+Last Commit: 27.01.2014
 
 @author: fraggle@phcn.de
 '''
 
 from features.feature import Feature
 from lepl.apps.rfc3696 import HttpUrl
-import requests
+from urllib import request
 import json
 
 class BotFeature(Feature):
@@ -17,12 +17,10 @@ class BotFeature(Feature):
         feature_response = ''
         
         if self.__url_validator(parameters[0]):
-            endpoint = 'http://5.gp/api/short?longurl=' + parameters[0]
-            response = requests.get(endpoint, verify=False)
-
-            data = json.loads(response.content)
-        
-            feature_response = 'v.ly URL => ' + data['url']
+            shortener_request = request.urlopen('http://5.gp/api/short?longurl=' + parameters[0])
+            shortener_response = json.loads(shortener_request.read().decode("utf-8"))
+            
+            feature_response = 'v.ly URL => ' + shortener_response['url']
         else:
             feature_response = 'Sorry bro, URL is not valid :/'
               
