@@ -1,5 +1,5 @@
 '''
-Last Commit: 15.01.2014
+Last Commit: 01.02.2014
 
 @author: fraggle@phcn.de
 '''
@@ -9,7 +9,16 @@ import feedparser
  
 news_feeds = { 'prog' : 'http://www.reddit.com/r/programming/.rss',
                'comp' : 'http://www.reddit.com/r/compsci/.rss',
-               'sec' : 'http://www.reddit.com/r/netsec/.rss' }
+               'sec' : 'http://www.reddit.com/r/netsec/.rss',
+               'heise' : 'http://heise.de.feedsportal.com/c/35207/f/653902/index.rss',
+               'golem' : 'http://rss.golem.de/rss.php?feed=ATOM1.0',
+               'sploitdb' : 'http://www.exploit-db.com/rss.xml',
+               'netzpol' : 'https://netzpolitik.org/feed/',
+               'fefe' : 'http://blog.fefe.de/rss.xml?html',
+               'phcn' : 'https://board.phcn.net/index.php?action=.xml;type=rss', 
+               'ntv' : 'http://www.n-tv.de/rss',
+               'spon' : 'http://www.spiegel.de/schlagzeilen/tops/index.rss',
+               'zeit' : 'http://newsfeed.zeit.de/index'}
 
 class BotFeature(Feature):
 

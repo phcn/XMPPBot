@@ -1,5 +1,5 @@
 '''
-Last Commit: 27.01.2014
+Last Commit: 01.02.2014
 
 @author: fraggle@phcn.de
 '''
@@ -27,7 +27,7 @@ class BotFeature(Feature):
         return feature_response
 
     def help(self):
-        return 'rmd5 - reverse md5 lookup (powered by md5.noisette.ch)\n'
+        return 'reversemd5 - reverse md5 lookup (powered by md5.noisette.ch)\n'
 
     def keyword(self):
-        return 'rmd5'
+        return 'reversemd5'

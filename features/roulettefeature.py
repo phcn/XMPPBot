@@ -1,5 +1,5 @@
 '''
-Last Commit: 16.01.2014
+Last Commit: 01.02.2014
 
 @author: freak_out@phcn.de
 '''
@@ -16,14 +16,14 @@ class BotFeature(Feature):
         self.fillDrum()
         
     def process(self, parameters):
-        returnstr=""
+        returnstr=''
         
         if len(parameters) == 2:
             if self.__drum[self.__chamber_counter] == 0:
-                returnstr = parameters[1]+" haelt sich den Revolver an sein Kopf und drueckt ab. +KLICK+ "+str(self.__chamber_counter)+"/5"
+                returnstr = parameters[1]+' haelt sich den Revolver an sein Kopf und drueckt ab. +KLICK+ '+str(self.__chamber_counter)+'/5'
                 self.__chamber_counter = self.__chamber_counter + 1
             else:
-                returnstr = parameters[1]+" haelt sich den Revolver an sein Kopf und drueckt ab. +BOOOM+ HEADSHOT! "+str(self.__chamber_counter)+"/5"
+                returnstr = parameters[1]+' haelt sich den Revolver an sein Kopf und drueckt ab. +BOOOM+ HEADSHOT! '+str(self.__chamber_counter)+'/5'
                 self.__drum[self.__chamber_counter]=0 # leere die Kammer
                 self.fillDrum()
                 self.__chamber_counter = 0

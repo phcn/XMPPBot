@@ -1,5 +1,5 @@
 '''
-Last Commit: 16.01.2014
+Last Commit: 01.02.2014
 
 @author: freak_out@phcn.de
 '''
@@ -10,7 +10,7 @@ class BotFeature(Feature):
 
     def __init__(self):
         self.__imbiss = {}
-        self.__imbiss_file = open("features/imbiss.txt","r")
+        self.__imbiss_file = open('features/imbiss.txt','r', encoding='utf-8')
         
         for line in self.__imbiss_file:
             food = line.split(',')
@@ -18,13 +18,13 @@ class BotFeature(Feature):
         
     def process(self, parameters):
         if len(parameters) == 2:
-            food = "Imbiss Speisekarte: \n"
+            food = 'Imbiss Speisekarte: \n'
             for key in self.__imbiss:
-                food += key + "\n"
+                food += key + '\n'
             return food[:-1]
 
         if len(parameters) == 3:
-            imbissitem = parameters[0].lower().encode('utf-8')
+            imbissitem = parameters[0].lower()
 
             if imbissitem in self.__imbiss:
                 return  '*** ' + parameters[1] + ' ' + self.__imbiss[imbissitem][:-1] + ' ' + parameters[2]

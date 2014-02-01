@@ -1,5 +1,5 @@
 '''
-Last Commit: 25.01.2014
+Last Commit: 01.02.2014
 
 @author: board.phcn.net
 '''
@@ -8,14 +8,15 @@ import os
 import imp 
 import sys
 import sleekxmpp
-import ConfigParser
+import configparser
 import megahal
+    
 
 def log_debug(message):
-    print "DEBUG: " + message
+    print('DEBUG: ' + message)
     pass
 def log_error(message):
-    print "ERROR: " + message
+    print('ERROR: ' + message)
     pass
     
 def feature_import(feature_sections):
@@ -32,7 +33,7 @@ def feature_import(feature_sections):
             help_messages += feature_instance.help(); 
         except:
             e = sys.exc_info()[0]
-            log_error("could not load module " + module_name)
+            log_error('Could not load module ' + module_name)
             log_debug(str(e))
     
     return features, help_messages
@@ -65,6 +66,8 @@ class XMPPBot(sleekxmpp.ClientXMPP):
 
             feature_parameters = msg['body'].split()
             feature_parameters.pop(0)
+            # check for empty parameters
+            # IndexError: pop from empty list
             feature_command = feature_parameters.pop(0)
             
             if feature_command in features:
@@ -74,7 +77,9 @@ class XMPPBot(sleekxmpp.ClientXMPP):
                     feature_response = features[feature_command].process(feature_parameters)
             elif feature_command == 'help':
                 feature_response = help_messages
+			# this needs to be processed in a separate function/class
             elif feature_command == 'quit' and msg['from'] in administrators:
+                feature_response = 'bye!'
                 self.disconnect(wait=True)
             else:
                 feature_response = mega_hal.get_reply(msg['body']).replace(self.nick,msg['mucnick'])
@@ -83,7 +88,7 @@ class XMPPBot(sleekxmpp.ClientXMPP):
 
 
 if __name__ == '__main__':     
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read('bot.cfg')
 
     features, help_messages = feature_import(config.get('Features','featurepaths').split(';'))

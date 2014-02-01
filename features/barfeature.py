@@ -1,5 +1,5 @@
 '''
-Last Commit: 16.01.2014
+Last Commit: 01.02.2014
 
 @author: freak_out@phcn.de
 '''
@@ -10,7 +10,7 @@ class BotFeature(Feature):
     
     def __init__(self):
         self.__minibar = {}
-        self.__minibar_file = open("features/minibar.txt","r")
+        self.__minibar_file = open('features/minibar.txt','r', encoding='utf-8')
         
         for line in self.__minibar_file:
             drink = line.split(',')
@@ -18,9 +18,9 @@ class BotFeature(Feature):
     
     def process(self, parameters):
         if len(parameters) == 2:
-            drinks = "Inhalt der Bar: \n"
+            drinks = 'Inhalt der Bar: \n'
             for key in self.__minibar:
-                drinks += key + "\n"
+                drinks += key + '\n'
             return drinks[:-1]
 
         if len(parameters) == 3:
