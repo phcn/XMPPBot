@@ -1,4 +1,4 @@
 XMPPBot
 =======
 
-A Python XMPP-Chatbot based on SleekXMPP (http://sleekxmpp.com/) and MegaHAL (http://code.google.com/p/halpy/)
+An experimental Python XMPP-Bot based on SleekXMPP (http://sleekxmpp.com/) and MegaHAL (http://code.google.com/p/halpy/)
