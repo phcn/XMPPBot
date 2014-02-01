@@ -66,9 +66,11 @@ class XMPPBot(sleekxmpp.ClientXMPP):
 
             feature_parameters = msg['body'].split()
             feature_parameters.pop(0)
-            # check for empty parameters
-            # IndexError: pop from empty list
-            feature_command = feature_parameters.pop(0)
+			
+            feature_command = ''
+            # check for empty parameters (otherwise -> IndexError: pop from empty list)
+            if feature_parameters:
+                feature_command = feature_parameters.pop(0)
             
             if feature_command in features:
                 if feature_command in msg['body']:
