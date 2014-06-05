@@ -1,7 +1,7 @@
 '''
 Last Commit: 01.02.2014
 
-@author: freak_out@phcn.de
+@author: freak_out@phcn.ws
 '''
 
 from features.feature import Feature
@@ -9,29 +9,35 @@ from random import randint
 from array import *
 
 class BotFeature(Feature):
-    
+  
+    def rotateDrum(self):
+        self.__chamber = randint(0,4)
+        print(self.__chamber)
+        
+  
     def __init__(self):
-        self.__drum = array('i',[0,0,0,0,0,0])
-        self.__chamber_counter = 0
+        self.__drum = array('i',[0,0,0,0,0])
         self.fillDrum()
         
     def process(self, parameters):
         returnstr=''
         
         if len(parameters) == 2:
-            if self.__drum[self.__chamber_counter] == 0:
-                returnstr = parameters[1]+' haelt sich den Revolver an sein Kopf und drueckt ab. +KLICK+ '+str(self.__chamber_counter)+'/5'
-                self.__chamber_counter = self.__chamber_counter + 1
+            self.rotateDrum()
+            if self.__drum[self.__chamber] == 0:
+                returnstr = parameters[1]+' dreht die Trommel und haelt sich den Revolver an sein Kopf und drueckt ab. +KLICK+ '
             else:
-                returnstr = parameters[1]+' haelt sich den Revolver an sein Kopf und drueckt ab. +BOOOM+ HEADSHOT! '+str(self.__chamber_counter)+'/5'
-                self.__drum[self.__chamber_counter]=0 # leere die Kammer
+                returnstr = parameters[1]+' dreht die Trommel und haelt sich den Revolver an sein Kopf und drueckt ab. +BOOOM+ HEADSHOT! '
+                self.__drum[self.__chamber]=0
                 self.fillDrum()
-                self.__chamber_counter = 0
+                self.__chamber = 0
     
 
             return returnstr
         else:
             return self.help()
+
+  
         
     def help(self):
         return 'roulette - play russian roulette! :)\n'
@@ -40,5 +46,5 @@ class BotFeature(Feature):
         return 'roulette'
     
     def fillDrum(self):
-        chamber = randint(0,5)
+        chamber = randint(0,4)
         self.__drum[chamber] = 1
